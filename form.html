@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Page</title>
+  <style>
+    input, textarea {
+      margin: 5px 0;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h2>Your Order</h2>
+  <div id="orderSummary"></div>
+
+  <h3>Enter your details</h3>
+  <form id="orderForm">
+    <label>Name: <input type="text" id="name" required></label>
+    <label>Address: <textarea id="address" required></textarea></label>
+    <label>Card Number: <input type="text" id="card" required></label>
+    <button type="button" onclick="payNow()">Pay</button>
+  </form>
+
+  <button onclick="saveFavourite()">Add to Favourites</button>
+  <button onclick="applyFavourite()">Apply Favourites</button>
+
+  <p id="confirmationMessage"></p>
+
+  <script>
+    const orderSummary = document.getElementById('orderSummary');
+    const cartData = JSON.parse(localStorage.getItem('currentCart')) || {};
+
+    function displayOrder() {
+      let summary = '<ul>';
+      for (let item in cartData) {
+        if (item !== 'total' && parseInt(cartData[item]) > 0) {
+          summary += `<li>${item}: ${cartData[item]}</li>`;
+        }
+      }
+      summary += `</ul><strong>Total: $${cartData.total}</strong>`;
+      orderSummary.innerHTML = summary;
+    }
+
+    function payNow() {
+      const name = document.getElementById('name').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const card = document.getElementById('card').value.trim();
+      const message = document.getElementById('confirmationMessage');
+
+      if (!name || !address || !card) {
+        alert("Please fill all fields correctly.");
+        return;
+      }
+
+      const deliveryDate = new Date();
+      deliveryDate.setDate(deliveryDate.getDate() + 3); // estimated 3 days delivery
+      message.innerHTML = `<strong>Thank you for your purchase, ${name}!</strong><br>Your items will be delivered by <strong>${deliveryDate.toDateString()}</strong>.`;
+    }
+
+    function saveFavourite() {
+      localStorage.setItem('favouriteOrder', JSON.stringify(cartData));
+      alert("Order saved as favourite.");
+    }
+
+    function applyFavourite() {
+      const fav = JSON.parse(localStorage.getItem('favouriteOrder'));
+      if (!fav) return alert("No favourite order saved.");
+      localStorage.setItem('currentCart', JSON.stringify(fav));
+      window.location.reload();
+    }
+
+    displayOrder();
+  </script>
+</body>
+</html>

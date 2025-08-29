@@ -1,0 +1,23 @@
+[
+  {
+    "id":1,
+    "name":"KAVVA",
+    "price": 200,
+    "image": "image/1.png"
+  },
+
+  {
+    "id":2,
+    "name":"KAVVA",
+    "price": 200,
+    "image": "image/1.png"
+  },
+
+  {
+    "id":3,
+    "name":"KAVVA",
+    "price": 200,
+    "image": "image/1.png"
+  }
+  
+]
