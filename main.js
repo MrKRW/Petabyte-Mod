@@ -1,4 +1,4 @@
-ndocument.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     // Get all quantity control buttons
     const quantityBtns = document.querySelectorAll('.quantity-btn');
     const quantityInputs = document.querySelectorAll('.quantity-input');
